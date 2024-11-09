@@ -1,0 +1,132 @@
+{
+    "questions": [
+        {
+            "index": 0,
+            "image": "questions/0.png",
+            "correctAnswer": "24",
+            "topic": "nterm",
+            "difficulty": 0.5,
+            "solution": "7(4)-4 = 28-4 = 24"
+        },
+        {
+            "index": 1,
+            "image": "questions/1.png",
+            "correctAnswer": "0.083",
+            "topic": "prob",
+            "difficulty": 0.3,
+            "solution": ""
+        },
+        {
+            "index": 2,
+            "image": "questions/2.png",
+            "correctAnswer": "27",
+            "topic": "prop",
+            "difficulty": 0.7,
+            "solution": ""
+        },
+        {
+            "index": 3,
+            "image": "questions/3.png",
+            "correctAnswer": "0.81",
+            "topic": "pythag",
+            "difficulty": 0.6,
+            "solution": ""
+        },
+        {
+            "index": 4,
+            "image": "questions/4.png",
+            "correctAnswer": "15.5",
+            "topic": "unkdenom",
+            "difficulty": 0.9,
+            "solution": ""
+        },
+        {
+            "index": 5,
+            "image": "questions/5.png",
+            "correctAnswer": "7.5",
+            "topic": "prop",
+            "difficulty": 0.5,
+            "solution": ""
+        },
+        {
+            "index": 6,
+            "image": "questions/6.png",
+            "correctAnswer": "0.5",
+            "topic": "unkdenom",
+            "difficulty": 0.4,
+            "solution": ""
+        },
+        {
+            "index": 7,
+            "image": "questions/7.png",
+            "correctAnswer": "3n+1",
+            "topic": "nterm",
+            "difficulty": 0.45,
+            "solution": ""
+        },
+        {
+            "index": 8,
+            "image": "questions/8.png",
+            "correctAnswer": "0.3",
+            "topic": "prob",
+            "difficulty": 0.45,
+            "solution": ""
+        },
+        {
+            "index": 9,
+            "image": "questions/9.png",
+            "correctAnswer": "10",
+            "topic": "pythag",
+            "difficulty": 0.5,
+            "solution": ""
+        },
+        {
+            "index": 10,
+            "image": "questions/10.png",
+            "correctAnswer": "-2.6",
+            "topic": "unkdenom",
+            "difficulty": 0.6,
+            "solution": ""
+        },
+        {
+            "index": 11,
+            "image": "questions/11.png",
+            "correctAnswer": "12",
+            "topic": "pythag",
+            "difficulty": 0.65,
+            "solution": ""
+        },
+        {
+            "index": 12,
+            "image": "questions/12.png",
+            "correctAnswer": "8",
+            "topic": "prop",
+            "difficulty": 0.7,
+            "solution": ""
+        },
+        {
+            "index": 13,
+            "image": "questions/13.png",
+            "correctAnswer": "65",
+            "topic": "nterm",
+            "difficulty": 0.75,
+            "solution": ""
+        },
+        {
+            "index": 14,
+            "image": "questions/14.png",
+            "correctAnswer": "0.72",
+            "topic": "prob",
+            "difficulty": 0.75,
+            "solution": ""
+        },
+        {
+            "index": 15,
+            "image": "questions/15.png",
+            "correctAnswer": "0.72",
+            "topic": "prob",
+            "difficulty": 0.9,
+            "solution": ""
+        }
+    ]
+}
