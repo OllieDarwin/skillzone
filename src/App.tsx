@@ -11,25 +11,58 @@ function App() {
   const [isCorrect, setIsCorrect] = useState(null)
   const [showSolution, setShowSolution] = useState(false)
 
+  const [attempts, setAttempts] = useState(0); // Track the number of attempts on a question
+
+  const [scores, setScores] = useState({ nterm: 0.5, prob: 0.5, prop: 0.5, pythag: 0.5, unkdenom: 0.5 });
+
+  // Function to select the next question based on lowest scoring topic
+  const getNextQuestion = () => {
+    const lowestTopic = Object.keys(scores).reduce((a, b) => scores[a] <= scores[b] ? a : b);
+    const topicQuestions = questions.questions.filter(q => q.topic === lowestTopic);
+    const nextQuestion = topicQuestions[Math.floor(Math.random() * topicQuestions.length)];
+    return nextQuestion;
+  };
+
   // Question data
   const [currentQuestion, setCurrentQuestion] = useState(questions.questions[0])
 
-  const handleSubmit = (e) => {
+  // Handle answer submission
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const isAnswerCorrect = userAnswer.trim() === currentQuestion.correctAnswer
-    setIsCorrect(isAnswerCorrect)
-    if (!isAnswerCorrect) {
-      setShowSolution(true)
-    }
-    // Here you would also update the user's profile with their performance
-  };
+    
+    const isAnswerCorrect = userAnswer.trim() === currentQuestion.correctAnswer;
+    setIsCorrect(isAnswerCorrect);
 
-  const handleQuestionIncrement = () => {
-    setIsCorrect(null)
-    setShowSolution(false)
-    setUserAnswer("")
-    setCurrentQuestion(!(questions.questions[currentQuestion.index + 1]) ? questions.questions[0] : questions.questions[currentQuestion.index + 1])
-  }
+    // Scoring adjustment based on correctness, attempts, and difficulty
+    const difficulty = currentQuestion.difficulty;
+    const topic = currentQuestion.topic;
+
+    if (isAnswerCorrect) {
+      // If correct on the first try, increase score by difficulty
+      if (attempts === 0) {
+        setScores(prevScores => ({
+          ...prevScores,
+          [topic]: Math.min(prevScores[topic] + difficulty * 0.1, 1) // Cap score at 1
+        }));
+      }
+      setShowSolution(false);
+      setAttempts(0);  // Reset attempts
+
+      const nextQuestion = getNextQuestion();
+      setCurrentQuestion(nextQuestion);
+      setIsCorrect(null)
+    } else {
+      // If incorrect, decrease score by difficulty
+      setScores(prevScores => ({
+        ...prevScores,
+        [topic]: Math.max(prevScores[topic] - difficulty * 0.05, 0) // Floor score at 0
+      }));
+      setShowSolution(true);
+      setAttempts(attempts + 1); // Increment attempts for this question
+    }
+
+    setUserAnswer('');  // Reset answer input
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 flex items-center justify-center">
@@ -45,30 +78,24 @@ function App() {
           </div>
 
           {/* Answer Form */}
-          {isCorrect !== true ?
-          <>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="answer" className="block text-sm font-medium">
-                  Your Answer:
-                </label>
-                <Input
-                  id="answer"
-                  type="text"
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  placeholder="Enter your answer here"
-                  className="w-full"
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Submit Answer
-              </Button>
-            </form>
-          </>
-          :
-          <></>
-          }
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label htmlFor="answer" className="block text-sm font-medium">
+                Your Answer:
+              </label>
+              <Input
+                id="answer"
+                type="text"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                placeholder="Enter your answer here"
+                className="w-full"
+              />
+            </div>
+            <Button type="submit" className="w-full">
+              Submit Answer
+            </Button>
+          </form>
 
           {/* Feedback Section */}
           {isCorrect !== null && (
@@ -80,7 +107,7 @@ function App() {
                 {isCorrect 
                   ? <>
                   'Great job! Ready for the next question?'
-                  <Button className='ml-4' onClick={handleQuestionIncrement}>Go</Button>
+                  <Button className='ml-4' onClick={handleSubmit}>Go</Button>
                   </>
                   : 'Keep practicing! Check out the solution below:'}
               </AlertDescription>
@@ -96,6 +123,16 @@ function App() {
           )}
         </CardContent>
       </Card>
+      <div className="scoreboard">
+        <h2>Scores</h2>
+        <ul>
+          {Object.keys(scores).map((topic) => (
+            <li key={topic}>
+              {topic}: {scores[topic]}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
